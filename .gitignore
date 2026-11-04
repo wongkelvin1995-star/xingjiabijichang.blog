@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local tooling, scratch work and backups (not part of the site)
+/.claude/
+/scratch/
+/backup-*.zip
