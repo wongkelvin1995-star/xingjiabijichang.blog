@@ -14,6 +14,9 @@ const latestArticleDay = ARTICLES.map((a) => a.modifiedDate).sort().pop() ?? '20
 const latestPriceDay = SITE_STATS.latestDataDate || latestArticleDay;
 const STATIC_PAGES_UPDATED = '2026-11-03';
 
+// 静态导出（部署到 Cloudflare Pages）要求元数据路由明确标成静态；服务器模式下它本来就是静态的
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const homeDay = [latestArticleDay, latestPriceDay].sort().pop() ?? latestArticleDay;
 

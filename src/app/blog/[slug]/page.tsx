@@ -21,13 +21,9 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-// 要求整条路由在预渲染阶段就完整生成：没有列进 generateStaticParams 的 slug（也就是不存在的文章）
-// 会先完成渲染、走到 notFound()，再返回 404 状态码；否则 Partial Prefetching 会先用 200 发出静态壳，
-// 之后才流式补上 404 页面，搜索引擎会把它记成“软 404”。
-export const ensureStatic = 'navigation';
-// 这条路由按设计是“先算出完整页面再响应”，不追求即时导航；关掉开发模式里的 Instant Navigation 校验，
-// 否则 next dev 会因为顶层 await params 反复报“URL data outside <Suspense>”。只影响开发期校验，不影响构建和线上行为。
-export const instant = false;
+// 静态导出：只生成 generateStaticParams 列出的文章页；没有列出的网址（不存在的文章）没有对应文件，
+// 托管平台会返回 out/404.html 和 404 状态码，不会出现“软 404”。
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return getAllArticles().map((article) => ({

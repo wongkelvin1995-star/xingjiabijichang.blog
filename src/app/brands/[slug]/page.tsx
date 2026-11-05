@@ -59,9 +59,8 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-// 同 blog/[slug]：不存在的品牌 slug 要先完成渲染并走到 notFound()，再以 404 状态码返回，避免软 404。
-export const ensureStatic = 'navigation';
-export const instant = false; // 同 blog/[slug]：只关闭开发期的即时导航校验
+// 同 blog/[slug]：静态导出只生成 generateStaticParams 列出的品牌页，其余网址由托管平台返回 404。
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return getAllBrands().map((brand) => ({
